@@ -1,3 +1,6 @@
+package main.java.it.sevenbits;
+
+import main.java.it.sevenbits.Formatter.Formatter;
 
 public class Main {
 

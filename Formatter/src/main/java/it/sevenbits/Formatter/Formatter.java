@@ -1,3 +1,5 @@
+package main.java.it.sevenbits.Formatter;
+
 import java.io.*;
 
 public class Formatter {
