@@ -4,46 +4,39 @@ import java.io.*;
 
 public class Formatter {
 
-    public void format(String fileToFormat, String fileForResult){
-        final int INTEND_LENGTH = 4;
-        int intendCount = 0;
+    public void format(InputStream in, OutputStream out) {
+        final int INTENT_LENGTH = 4;
+        int intentCount = 0;
         char currentChar;
         char previousChar; //last significant symbol
         boolean newLine = false;
         boolean wasSpace = false;
         try {
-            InputStream in = new FileInputStream(fileToFormat);
-            OutputStream out = new FileOutputStream(fileForResult);
             int length = in.available();
             previousChar = (char) in.read();
             out.write(previousChar);
             for (int i = 0; i < length - 1; i++) {
                 currentChar = (char) in.read();
-                if (previousChar == ';' && currentChar == '}') {
+                if (currentChar != '}' && newLine && currentChar != ' ' && currentChar != '\n') {
                     out.write('\n');
-                    for (int j = 0; j < INTEND_LENGTH * (intendCount - 1); j++) {
-                        out.write(' ');
-                    }
-                    newLine = false;
-                } else if (newLine && currentChar != ' ' && currentChar != '\n') {
-                    out.write('\n');
-                    for (int j = 0; j < INTEND_LENGTH * intendCount; j++) {
+                    for (int j = 0; j < INTENT_LENGTH * intentCount; j++) {
                         out.write(' ');
                     }
                     newLine = false;
                 }
                 switch (currentChar) {
                     case '{':
-                        intendCount++;
-                        if (!wasSpace) {
-                            out.write(' ');
-                        }
+                        intentCount++;
                         out.write(currentChar);
                         newLine = true;
                         wasSpace = false;
                         break;
                     case '}':
-                        intendCount--;
+                        intentCount--;
+                        out.write('\n');
+                        for (int j = 0; j < INTENT_LENGTH * intentCount; j++) {
+                            out.write(' ');
+                        }
                         out.write(currentChar);
                         newLine = true;
                         wasSpace = false;
