@@ -1,6 +1,9 @@
 package main.java.it.sevenbits.Formatter;
 
-import java.io.*;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class Formatter {
 
@@ -15,6 +18,10 @@ public class Formatter {
             int length = in.available();
             previousChar = (char) in.read();
             out.write(previousChar);
+            if (previousChar == '{' || previousChar == ';'){
+                intentCount++;
+                newLine = true;
+            }
             for (int i = 0; i < length - 1; i++) {
                 currentChar = (char) in.read();
                 if (currentChar != '}' && newLine && currentChar != ' ' && currentChar != '\n') {
