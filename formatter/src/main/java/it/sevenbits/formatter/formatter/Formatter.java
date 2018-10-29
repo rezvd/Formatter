@@ -22,14 +22,18 @@ public class Formatter {
         boolean newLine = false;
         boolean wasSpace = false;
         try {
-            previousChar = (char) in.read();
+            if (in.hasNext()) {
+                previousChar = in.read();
+            } else {
+                return;
+            }
             out.write(previousChar);
             if (previousChar == '{' || previousChar == ';') {
                 intentCount++;
                 newLine = true;
             }
             while (in.hasNext()) {
-                currentChar = (char) in.read();
+                currentChar = in.read();
                 if (currentChar != '}' && newLine && currentChar != ' ' && currentChar != '\n') {
                     out.write('\n');
                     for (int j = 0; j < INTENT_LENGTH * intentCount; j++) {

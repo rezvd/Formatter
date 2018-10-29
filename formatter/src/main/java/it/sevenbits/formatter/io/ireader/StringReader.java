@@ -5,7 +5,7 @@ package it.sevenbits.formatter.io.ireader;
  */
 public class StringReader implements IReader {
     private String input;
-    private int currenPosition;
+    private int currentPosition;
 
     /**
      * Constructor of StringReader class
@@ -13,7 +13,7 @@ public class StringReader implements IReader {
      */
     public StringReader(final String string) {
         this.input = string;
-        currenPosition = 0;
+        currentPosition = 0;
     }
 
     /**
@@ -22,7 +22,7 @@ public class StringReader implements IReader {
      */
     @Override
     public boolean hasNext() {
-        return currenPosition < input.length();
+        return currentPosition < input.length();
     }
 
     /**
@@ -31,6 +31,6 @@ public class StringReader implements IReader {
      */
     @Override
     public char read() {
-        return input.charAt(currenPosition++);
+        return input.charAt(currentPosition++);
     }
 }

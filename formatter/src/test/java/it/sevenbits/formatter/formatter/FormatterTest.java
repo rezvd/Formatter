@@ -15,7 +15,7 @@ public class FormatterTest {
     String easy;
     String easyResult;
     String brackets;
-    String brabketsResult;
+    String bracketsResult;
     String manyIndents;
     String manyIndentsresult;
 
@@ -32,7 +32,7 @@ public class FormatterTest {
         reader = new StringReader(brackets);
         writer = new StringWriter();
         formatter.format(reader, writer);
-        assertEquals(brabketsResult, writer.toString());
+        assertEquals(bracketsResult, writer.toString());
     }
 
     @Test
@@ -41,6 +41,18 @@ public class FormatterTest {
         writer = new StringWriter();
         formatter.format(reader, writer);
         assertEquals(manyIndentsresult, writer.toString());
+    }
+
+    @Test
+    public void testAgainFormatting() {
+        reader = new StringReader(brackets);
+        writer = new StringWriter();
+        IWriter againWriter = new StringWriter();
+        formatter.format(reader, writer);
+        reader = new StringReader(brackets);
+        formatter.format(reader, againWriter);
+        assertEquals(bracketsResult, writer.toString());
+        assertEquals(againWriter.toString(), writer.toString());
     }
 
     @Before
@@ -56,7 +68,7 @@ public class FormatterTest {
                 "    }\n" +
                 "}";
         brackets = "{{{{}}}}";
-        brabketsResult = "{\n" +
+        bracketsResult = "{\n" +
                 "    {\n" +
                 "        {\n" +
                 "            {\n" +
