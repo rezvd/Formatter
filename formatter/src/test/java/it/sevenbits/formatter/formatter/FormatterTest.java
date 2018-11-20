@@ -5,6 +5,7 @@ import it.sevenbits.formatter.io.ireader.ReaderException;
 import it.sevenbits.formatter.io.ireader.StringReader;
 import it.sevenbits.formatter.io.iwriter.IWriter;
 import it.sevenbits.formatter.io.iwriter.StringWriter;
+import it.sevenbits.formatter.lexer_factory.LexerFactory;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -13,10 +14,12 @@ public class FormatterTest {
     Formatter formatter;
     IReader reader;
     IWriter writer;
+    String brackets;
+    String bracketsResult;
 
     @Before
     public void setUp() {
-        formatter = new Formatter();
+        formatter = new Formatter(new LexerFactory());
     }
 
     @Test
@@ -51,7 +54,7 @@ public class FormatterTest {
 
     @Test
     public void testManyIndents() throws ReaderException {
-        reader = new StringReader("package main.it.sevenbits;public class Line {private Point start, end;public                         Line(Point start,                           Point end){\n" +
+        reader = new StringReader("package main.it.sevenbits;public class Line {private Point start,end;public                         Line(Point start,                           Point end){\n" +
                 "       \n" +
                 "\n" +
                 "\n" +
@@ -65,7 +68,7 @@ public class FormatterTest {
                 " }\n" +
                 "\n" +
                 "    public double getLength(){\n" +
-                "        return Math.sqrt(Math.pow((end.getX() - start.getX()), 2) + Math.pow(end.getY() - start.getY(), 2));\n" +
+                "        return Math.sqrt(Math.pow((end.getX() - start.getX()),2) + Math.pow(end.getY() - start.getY(),2));\n" +
                 "    }public Point getStart\n" +
                 "\n" +
                 "\n" +

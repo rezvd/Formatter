@@ -10,4 +10,6 @@ public interface IWriter {
      * @param c Is will be written as next char to the stream
      */
     void write(char c);
+
+    void write(String s);
 }

@@ -1,8 +1,11 @@
 package it.sevenbits.formatter.formatter;
 
+import it.sevenbits.formatter.Token.IToken;
 import it.sevenbits.formatter.io.ireader.IReader;
 import it.sevenbits.formatter.io.ireader.ReaderException;
 import it.sevenbits.formatter.io.iwriter.IWriter;
+import it.sevenbits.formatter.lexer_factory.ILexerFactory;
+import it.sevenbits.formatter.lexer_factory.lexer.ILexer;
 
 /**
  * Formats code with right indents and spaces
@@ -10,79 +13,99 @@ import it.sevenbits.formatter.io.iwriter.IWriter;
 public class Formatter {
     private static final int INTENT_LENGTH = 4;
 
+    private final ILexerFactory lexerFactory;
+
+    public Formatter(final ILexerFactory lexerFactory) {
+        this.lexerFactory = lexerFactory;
+    }
     /**
      * Puts right indents and spaces in the code
      *
-     * @param in  Contains input code, which will be format
-     * @param out Gives the result - formatted code
+     * @param out gives the result - formatted code
      * @throws ReaderException if an error appears while reading
      */
-    public void format(final IReader in, final IWriter out) throws ReaderException {
+    public void format(final IReader reader, final IWriter out) throws ReaderException {
+        ILexer lexer = lexerFactory.createLexer(reader);
         int intentCount = 0;
-        char currentChar;
-        char previousChar;
+        IToken currentToken;
+        IToken previousToken;
         boolean newLine = false;
         boolean wasSpace = false;
-        if (in.hasNext()) {
-            previousChar = in.read();
+        if (lexer.hasMoreTokens()) {
+            previousToken = lexer.nextToken();
         } else {
             return;
         }
-        out.write(previousChar);
-        if (previousChar == '{' || previousChar == ';') {
+        out.write(previousToken.getLexeme());
+        if (previousToken.getName().equals("Left brace")) {
             intentCount++;
             newLine = true;
         }
-        while (in.hasNext()) {
-            currentChar = in.read();
-            if (currentChar != '}' && newLine && currentChar != ' ' && currentChar != '\n') {
+        if (previousToken.getName().equals("Semicolon")) {
+            newLine = true;
+        }
+        while (lexer.hasMoreTokens()) {
+            currentToken = lexer.nextToken();
+            if (!currentToken.getName().equals("Right brace") && newLine && !currentToken.getName().equals("Whitespace")
+                    && !currentToken.getName().equals("New line")) {
                 out.write('\n');
                 for (int j = 0; j < INTENT_LENGTH * intentCount; j++) {
                     out.write(' ');
                 }
                 newLine = false;
             }
-            switch (currentChar) {
-                case '{':
+            switch (currentToken.getName()) {
+                case "Left brace":
                     intentCount++;
-                    out.write(currentChar);
+                    out.write(currentToken.getLexeme());
                     newLine = true;
                     wasSpace = false;
                     break;
-                case '}':
+                case "Right brace":
                     intentCount--;
                     out.write('\n');
                     for (int j = 0; j < INTENT_LENGTH * intentCount; j++) {
                         out.write(' ');
                     }
-                    out.write(currentChar);
+                    out.write(currentToken.getLexeme());
                     newLine = true;
                     wasSpace = false;
                     break;
-                case ';':
-                    out.write(currentChar);
+                case "Semicolon":
+                    out.write(currentToken.getLexeme());
                     newLine = true;
                     wasSpace = false;
                     break;
-                case '\n':
-                    currentChar = previousChar;
+                case "New line":
+                    currentToken = previousToken;
                     if (!wasSpace) {
                         out.write(' ');
                     }
                     wasSpace = true;
                     break;
-                case ' ':
+                case "Whitespace":
                     if (!wasSpace) {
-                        out.write(currentChar);
+                        out.write(currentToken.getLexeme());
                     }
                     wasSpace = true;
-                    currentChar = previousChar;
+                    currentToken = previousToken;
                     break;
-                default:
-                    out.write(currentChar);
+                case "Comma":
+                    out.write(currentToken.getLexeme());
+                    out.write(' ');
+                    wasSpace = true;
+                    break;
+                case "Word":
+                case "Left parenthesis":
+                case "Right parenthesis":
+                case "Left bracket":
+                case "Right bracket":
+                    out.write(currentToken.getLexeme());
                     wasSpace = false;
+                default:
+                    break;
             }
-            previousChar = currentChar;
+            previousToken = currentToken;
         }
     }
 }

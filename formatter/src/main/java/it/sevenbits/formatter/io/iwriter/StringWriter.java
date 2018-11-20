@@ -15,6 +15,11 @@ public class StringWriter implements IWriter {
         result.append(c);
     }
 
+    @Override
+    public void write(final String s) {
+        result.append(s);
+    }
+
     /**
      * Resurn string result of writing
      * @return string, which contains all written chars

@@ -6,6 +6,7 @@ import it.sevenbits.formatter.io.ireader.ReaderException;
 import it.sevenbits.formatter.io.ireader.StringReader;
 import it.sevenbits.formatter.io.iwriter.IWriter;
 import it.sevenbits.formatter.io.iwriter.StringWriter;
+import it.sevenbits.formatter.lexer_factory.LexerFactory;
 
 /**
  * Class to demonstrate work fo Formatter
@@ -23,7 +24,7 @@ public final class Main {
      * @throws ReaderException if an error appears while reading
      */
     public static void main(final String[] args) throws ReaderException {
-        Formatter formatter = new Formatter();
+        Formatter formatter = new Formatter(new LexerFactory());
         IReader reader = new StringReader(args[0]);
         IWriter writer = new StringWriter();
         formatter.format(reader, writer);
