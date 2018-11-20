@@ -14,7 +14,7 @@ public interface IReader {
     /**
      * Read next char from the input
      * @return next char
-     * @throws IReaderException if there are no any next chars
+     * @throws ReaderException if there are no any next chars
      */
-    char read() throws IReaderException;
+    char read() throws ReaderException;
 }

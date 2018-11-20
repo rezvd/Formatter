@@ -2,6 +2,7 @@ package it.sevenbits.formatter;
 
 import it.sevenbits.formatter.formatter.Formatter;
 import it.sevenbits.formatter.io.ireader.IReader;
+import it.sevenbits.formatter.io.ireader.ReaderException;
 import it.sevenbits.formatter.io.ireader.StringReader;
 import it.sevenbits.formatter.io.iwriter.IWriter;
 import it.sevenbits.formatter.io.iwriter.StringWriter;
@@ -19,8 +20,9 @@ public final class Main {
     /**
      * The main method in Main class, demonstrates work of Formatter
      * @param args Strings, which can be set up in Configurations
+     * @throws ReaderException if an error appears while reading
      */
-    public static void main(final String[] args) {
+    public static void main(final String[] args) throws ReaderException {
         Formatter formatter = new Formatter();
         IReader reader = new StringReader(args[0]);
         IWriter writer = new StringWriter();

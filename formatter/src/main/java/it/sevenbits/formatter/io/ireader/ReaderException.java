@@ -3,19 +3,19 @@ package it.sevenbits.formatter.io.ireader;
 /**
  * Can appear while reading input next
  */
-public class IReaderException extends Exception {
+public class ReaderException extends Exception {
 
     /**
      * Constructor without parameters
      */
-    public IReaderException() {
+    public ReaderException() {
     }
 
     /**
      * Constructor with massage of an exception
      * @param s Is a message about an exception
      */
-    public IReaderException(final String s) {
+    public ReaderException(final String s) {
         super(s);
     }
 
@@ -23,7 +23,7 @@ public class IReaderException extends Exception {
      * Constructor with cause of an exception
      * @param throwable Is a cause of an exception
      */
-    public IReaderException(final Throwable throwable) {
+    public ReaderException(final Throwable throwable) {
         super(throwable);
     }
 
@@ -32,7 +32,7 @@ public class IReaderException extends Exception {
      * @param s Is a message about an exception
      * @param throwable Is a cause of an exception
      */
-    public IReaderException(final String s, final Throwable throwable) {
+    public ReaderException(final String s, final Throwable throwable) {
         super(s, throwable);
     }
 
