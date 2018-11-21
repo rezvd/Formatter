@@ -1,5 +1,7 @@
 package it.sevenbits.formatter.io.iwriter;
 
+import java.io.IOException;
+
 /**
  * Writes chars in the output string
  */
@@ -27,5 +29,10 @@ public class StringWriter implements IWriter {
     @Override
     public String toString() {
         return result.toString();
+    }
+
+    @Override
+    public void close() throws IOException {
+        result.delete(0, result.length());
     }
 }

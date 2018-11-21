@@ -5,11 +5,18 @@ import it.sevenbits.formatter.Token.Token;
 import it.sevenbits.formatter.io.ireader.IReader;
 import it.sevenbits.formatter.io.ireader.ReaderException;
 
+/**
+ * Divides given text into meaningful parts - lexemes, which are stored in tokens
+ */
 public class Lexer implements ILexer {
     private IReader reader;
     private char previous = ' ';
     private boolean hasPrevious = false;
 
+    /**
+     * Creates lexer for this Reader
+     * @param reader gives data for lexer
+     */
     public Lexer(final IReader reader) {
         this.reader = reader;
     }

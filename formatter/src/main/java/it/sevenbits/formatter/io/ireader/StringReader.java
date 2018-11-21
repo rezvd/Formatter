@@ -1,5 +1,7 @@
 package it.sevenbits.formatter.io.ireader;
 
+import java.io.IOException;
+
 /**
  * Reads char by char from the input string
  */
@@ -32,5 +34,10 @@ public class StringReader implements IReader {
     @Override
     public char read() {
         return input.charAt(currentPosition++);
+    }
+
+    @Override
+    public void close() throws IOException {
+        input = null;
     }
 }

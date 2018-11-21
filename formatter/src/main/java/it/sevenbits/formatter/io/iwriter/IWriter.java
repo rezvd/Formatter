@@ -1,15 +1,23 @@
 package it.sevenbits.formatter.io.iwriter;
 
+import java.io.Closeable;
+
 /**
- * Set the way the text will be given
+ * Set the way the result text will be given
  */
-public interface IWriter {
+public interface IWriter extends Closeable {
 
     /**
      * Writes to the stream new char
-     * @param c Is will be written as next char to the stream
+     * @param c will be written as next char to the stream
+     * @throws WriterException if an error appears while writing char
      */
-    void write(char c);
+    void write(char c) throws WriterException;
 
-    void write(String s);
+    /**
+     * Writes to the stream new string
+     * @param s will be written in the end of the stream
+     * @throws WriterException if an error appears while writing string
+     */
+    void write(String s) throws WriterException;
 }

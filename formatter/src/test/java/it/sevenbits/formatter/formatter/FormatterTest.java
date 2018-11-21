@@ -1,21 +1,32 @@
 package it.sevenbits.formatter.formatter;
 
+import it.sevenbits.formatter.io.ireader.FileReader;
 import it.sevenbits.formatter.io.ireader.IReader;
 import it.sevenbits.formatter.io.ireader.ReaderException;
 import it.sevenbits.formatter.io.ireader.StringReader;
 import it.sevenbits.formatter.io.iwriter.IWriter;
 import it.sevenbits.formatter.io.iwriter.StringWriter;
+import it.sevenbits.formatter.io.iwriter.WriterException;
 import it.sevenbits.formatter.lexer_factory.LexerFactory;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class FormatterTest {
     Formatter formatter;
     IReader reader;
     IWriter writer;
-    String brackets;
-    String bracketsResult;
 
     @Before
     public void setUp() {
@@ -23,7 +34,7 @@ public class FormatterTest {
     }
 
     @Test
-    public void testWithoutSpaces() throws ReaderException {
+    public void testWithoutSpaces() throws ReaderException, WriterException {
         reader = new StringReader("{aaa;{{aaa;}}}");
         writer = new StringWriter();
         formatter.format(reader, writer);
@@ -38,7 +49,7 @@ public class FormatterTest {
     }
 
     @Test
-    public void testBrackets() throws ReaderException {
+    public void testBrackets() throws ReaderException, WriterException {
         reader = new StringReader("{{{{}}}}");
         writer = new StringWriter();
         formatter.format(reader, writer);
@@ -53,7 +64,7 @@ public class FormatterTest {
     }
 
     @Test
-    public void testManyIndents() throws ReaderException {
+    public void testManyIndents() throws ReaderException, WriterException {
         reader = new StringReader("package main.it.sevenbits;public class Line {private Point start,end;public                         Line(Point start,                           Point end){\n" +
                 "       \n" +
                 "\n" +
@@ -95,7 +106,7 @@ public class FormatterTest {
     }
 
     @Test
-    public void testAgainFormatting() throws ReaderException {
+    public void testAgainFormatting() throws ReaderException, WriterException {
         reader = new StringReader("{{{{}}}}");
         writer = new StringWriter();
         IWriter againWriter = new StringWriter();
@@ -113,4 +124,18 @@ public class FormatterTest {
         assertEquals(againWriter.toString(), writer.toString());
     }
 
+    @Test
+    public void testWithMockedFileReader() throws ReaderException, WriterException {
+        reader = mock(FileReader.class);
+        when(reader.read()).thenReturn('{', '{', '{', '}', '}', '}');
+        when(reader.hasNext()).thenReturn(true, true, true, true, true, true, false);
+        writer = new StringWriter();
+        formatter.format(reader, writer);
+        assertEquals("{\n" +
+                "    {\n" +
+                "        {\n" +
+                "        }\n" +
+                "    }\n" +
+                "}", writer.toString());
+    }
 }
