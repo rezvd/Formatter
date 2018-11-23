@@ -11,7 +11,7 @@ import it.sevenbits.formatter.lexer_factory.lexer.ILexer;
 /**
  * Formats code with right indents and spaces
  */
-public class Formatter {
+public class Formatter implements IFormatter {
     private static final int INTENT_LENGTH = 4;
 
     private final ILexerFactory lexerFactory;
