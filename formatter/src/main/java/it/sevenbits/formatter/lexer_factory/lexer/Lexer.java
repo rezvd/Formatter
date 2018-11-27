@@ -1,7 +1,7 @@
 package it.sevenbits.formatter.lexer_factory.lexer;
 
-import it.sevenbits.formatter.Token.IToken;
-import it.sevenbits.formatter.Token.Token;
+import it.sevenbits.formatter.token.IToken;
+import it.sevenbits.formatter.token.Token;
 import it.sevenbits.formatter.io.ireader.IReader;
 import it.sevenbits.formatter.io.ireader.ReaderException;
 

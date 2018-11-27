@@ -1,4 +1,2 @@
-1 wслово 
- word 
-line 
- new line
+1word
+слово

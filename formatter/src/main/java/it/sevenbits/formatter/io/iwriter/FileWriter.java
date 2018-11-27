@@ -1,6 +1,8 @@
 package it.sevenbits.formatter.io.iwriter;
 
+
 import java.io.BufferedWriter;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -9,7 +11,7 @@ import java.nio.charset.Charset;
 /**
  * Class, that provides opportunity to write information to file char by char
  */
-public class FileWriter implements IWriter, AutoCloseable {
+public class FileWriter implements IWriter, Closeable {
     private BufferedWriter bWriter;
 
     /**
@@ -27,15 +29,6 @@ public class FileWriter implements IWriter, AutoCloseable {
             bWriter.write(c);
         } catch (IOException e) {
             throw new WriterException("Couldn't write a char in the file", e);
-        }
-    }
-
-    @Override
-    public void write(final String s) throws WriterException {
-        try {
-            bWriter.write(s);
-        } catch (IOException e) {
-            throw new WriterException("Couldn't write a string in the file", e);
         }
     }
 

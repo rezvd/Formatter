@@ -1,11 +1,10 @@
 package it.sevenbits.formatter.io.iwriter;
 
-import java.io.IOException;
-
 /**
  * Writes chars in the output string
  */
 public class StringWriter implements IWriter {
+
     private StringBuilder result = new StringBuilder();
 
     /**
@@ -17,11 +16,6 @@ public class StringWriter implements IWriter {
         result.append(c);
     }
 
-    @Override
-    public void write(final String s) {
-        result.append(s);
-    }
-
     /**
      * Resurn string result of writing
      * @return string, which contains all written chars
@@ -29,10 +23,5 @@ public class StringWriter implements IWriter {
     @Override
     public String toString() {
         return result.toString();
-    }
-
-    @Override
-    public void close() throws IOException {
-        result.delete(0, result.length());
     }
 }

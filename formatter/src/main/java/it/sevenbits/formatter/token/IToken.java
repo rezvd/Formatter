@@ -1,4 +1,4 @@
-package it.sevenbits.formatter.Token;
+package it.sevenbits.formatter.token;
 
 /**
  * Sets the way of working with token

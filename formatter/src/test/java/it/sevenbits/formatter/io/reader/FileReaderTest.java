@@ -16,7 +16,7 @@ public class FileReaderTest {
 
     @Test
     public void testWithFiles () throws Exception {
-        try (IReader reader = new FileReader(new FileInputStream("in.txt"), Charset.forName("UTF-8"))) {
+        try (FileReader reader = new FileReader(new FileInputStream("in.txt"), Charset.forName("UTF-8"))) {
             assertTrue(reader.hasNext());
             assertEquals('а', reader.read());
             assertTrue(reader.hasNext());

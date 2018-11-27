@@ -1,6 +1,6 @@
 package it.sevenbits.formatter.formatter;
 
-import it.sevenbits.formatter.Token.IToken;
+import it.sevenbits.formatter.token.IToken;
 import it.sevenbits.formatter.io.ireader.IReader;
 import it.sevenbits.formatter.io.ireader.ReaderException;
 import it.sevenbits.formatter.io.iwriter.IWriter;
@@ -44,7 +44,9 @@ public class Formatter implements IFormatter {
         } else {
             return;
         }
-        out.write(previousToken.getLexeme());
+        for (int i = 0; i < previousToken.getLexeme().length(); i++) {
+            out.write(previousToken.getLexeme().charAt(i));
+        }
         if (previousToken.getName().equals("Left brace")) {
             intentCount++;
             newLine = true;
@@ -65,7 +67,9 @@ public class Formatter implements IFormatter {
             switch (currentToken.getName()) {
                 case "Left brace":
                     intentCount++;
-                    out.write(currentToken.getLexeme());
+                    for (int i = 0; i < currentToken.getLexeme().length(); i++) {
+                        out.write(currentToken.getLexeme().charAt(i));
+                    }
                     newLine = true;
                     wasSpace = false;
                     break;
@@ -75,12 +79,16 @@ public class Formatter implements IFormatter {
                     for (int j = 0; j < INTENT_LENGTH * intentCount; j++) {
                         out.write(' ');
                     }
-                    out.write(currentToken.getLexeme());
+                    for (int i = 0; i < currentToken.getLexeme().length(); i++) {
+                        out.write(currentToken.getLexeme().charAt(i));
+                    }
                     newLine = true;
                     wasSpace = false;
                     break;
                 case "Semicolon":
-                    out.write(currentToken.getLexeme());
+                    for (int i = 0; i < currentToken.getLexeme().length(); i++) {
+                        out.write(currentToken.getLexeme().charAt(i));
+                    }
                     newLine = true;
                     wasSpace = false;
                     break;
@@ -93,13 +101,18 @@ public class Formatter implements IFormatter {
                     break;
                 case "Whitespace":
                     if (!wasSpace) {
-                        out.write(currentToken.getLexeme());
+
+                        for (int i = 0; i < currentToken.getLexeme().length(); i++) {
+                            out.write(currentToken.getLexeme().charAt(i));
+                        }
                     }
                     wasSpace = true;
                     currentToken = previousToken;
                     break;
                 case "Comma":
-                    out.write(currentToken.getLexeme());
+                    for (int i = 0; i < currentToken.getLexeme().length(); i++) {
+                        out.write(currentToken.getLexeme().charAt(i));
+                    }
                     out.write(' ');
                     wasSpace = true;
                     break;
@@ -108,7 +121,9 @@ public class Formatter implements IFormatter {
                 case "Right parenthesis":
                 case "Left bracket":
                 case "Right bracket":
-                    out.write(currentToken.getLexeme());
+                    for (int i = 0; i < currentToken.getLexeme().length(); i++) {
+                        out.write(currentToken.getLexeme().charAt(i));
+                    }
                     wasSpace = false;
                 default:
                     break;

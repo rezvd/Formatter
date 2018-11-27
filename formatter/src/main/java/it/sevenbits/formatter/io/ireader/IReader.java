@@ -1,11 +1,9 @@
 package it.sevenbits.formatter.io.ireader;
 
-import java.io.Closeable;
-
 /**
  * Set the way of reading input text
  */
-public interface IReader extends Closeable {
+public interface IReader {
 
     /**
      * Checks, if there is next char
