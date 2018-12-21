@@ -1,4 +1,4 @@
-package it.sevenbits.formatter.lexer_factory.lexer;
+package it.sevenbits.formatter.lexer;
 
 import it.sevenbits.formatter.token.IToken;
 import it.sevenbits.formatter.io.ireader.ReaderException;

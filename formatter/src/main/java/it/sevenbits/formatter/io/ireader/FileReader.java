@@ -3,8 +3,9 @@ package it.sevenbits.formatter.io.ireader;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
@@ -17,12 +18,16 @@ public class FileReader implements IReader, Closeable {
 
     /**
      * Creates FileReader for the file
-     * @param inputStream must contain the file to read
+     * @param fileName if the name of file, where information will be read
      * @param charset is encoding of the file for proper reading
      * @throws ReaderException if an error appears while reading
      */
-    public FileReader(final InputStream inputStream, final Charset charset) throws ReaderException {
-        bReader = new BufferedReader(new InputStreamReader(inputStream, charset));
+    public FileReader(final String fileName, final Charset charset) throws ReaderException {
+        try {
+            bReader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), charset));
+        } catch (FileNotFoundException e) {
+            throw new ReaderException("Couldn't find file: " + fileName, e);
+        }
         try {
             nextChar = bReader.read();
         } catch (IOException e) {

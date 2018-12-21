@@ -5,10 +5,8 @@ import it.sevenbits.formatter.io.ireader.FileReader;
 import it.sevenbits.formatter.io.ireader.ReaderException;
 import it.sevenbits.formatter.io.iwriter.FileWriter;
 import it.sevenbits.formatter.io.iwriter.WriterException;
-import it.sevenbits.formatter.lexer_factory.LexerFactory;
+import it.sevenbits.formatter.lexer.lexer_factory.LexerFactory;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
@@ -32,8 +30,8 @@ public final class Main {
     public static void main(final String[] args) throws ReaderException, WriterException, IOException {
         Formatter formatter = new Formatter(new LexerFactory());
         try (
-                FileReader reader = new FileReader(new FileInputStream(args[0]), Charset.forName("UTF-8"));
-                FileWriter writer = new FileWriter(new FileOutputStream(args[1]), Charset.forName("UTF-8"))) {
+                FileReader reader = new FileReader(args[0], Charset.forName("UTF-8"));
+                FileWriter writer = new FileWriter(args[1], Charset.forName("UTF-8"))) {
             formatter.format(reader, writer);
         }
     }

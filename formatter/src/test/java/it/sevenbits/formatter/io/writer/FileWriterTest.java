@@ -14,7 +14,7 @@ public class FileWriterTest {
 
     @Test
     public void testWithNumbersAndLetters () throws Exception {
-        try (FileWriter writer = new FileWriter(new FileOutputStream("out.txt"), Charset.forName("UTF-8"))) {
+        try (FileWriter writer = new FileWriter("out.txt", Charset.forName("UTF-8"))) {
             writer.write('1');
             writer.write('w');
             writer.write('o');
@@ -27,7 +27,7 @@ public class FileWriterTest {
             writer.write('в');
             writer.write('о');
         }
-        try (FileReader reader = new FileReader(new FileInputStream("out.txt"), Charset.forName("UTF-8"))) {
+        try (FileReader reader = new FileReader("out.txt", Charset.forName("UTF-8"))) {
             StringBuilder result = new StringBuilder();
             while (reader.hasNext()) {
                 result.append(reader.read());

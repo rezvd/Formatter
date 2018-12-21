@@ -1,13 +1,14 @@
-package it.sevenbits.formatter.lexer_factory;
+package it.sevenbits.formatter.lexer.lexer_factory;
 
 import it.sevenbits.formatter.io.ireader.IReader;
-import it.sevenbits.formatter.lexer_factory.lexer.ILexer;
-import it.sevenbits.formatter.lexer_factory.lexer.Lexer;
+import it.sevenbits.formatter.lexer.ILexer;
+import it.sevenbits.formatter.lexer.Lexer;
+import it.sevenbits.formatter.lexer.LexerSM;
 
 /**
  * Creates lexer for given reader
  */
-public class LexerFactory implements ILexerFactory {
+public class LexerFactory implements ILexerFactory, ILexerSMFactory {
 
     /**
      * Creates needed lexer for this reader
@@ -16,5 +17,10 @@ public class LexerFactory implements ILexerFactory {
      */
     public ILexer createLexer(final IReader reader) {
         return new Lexer(reader);
+    }
+
+    @Override
+    public ILexer createLexerSM(final IReader reader) {
+        return new LexerSM(reader);
     }
 }

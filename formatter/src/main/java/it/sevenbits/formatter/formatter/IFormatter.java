@@ -1,5 +1,6 @@
 package it.sevenbits.formatter.formatter;
 
+import it.sevenbits.formatter.formatter.state_machine.FormatterException;
 import it.sevenbits.formatter.io.ireader.IReader;
 import it.sevenbits.formatter.io.ireader.ReaderException;
 import it.sevenbits.formatter.io.iwriter.IWriter;
@@ -17,5 +18,5 @@ public interface IFormatter {
      * @throws ReaderException if an error appears while reading
      * @throws WriterException if an error appears while writing
      */
-    void format(IReader reader, IWriter out) throws ReaderException, WriterException;
+    void format(IReader reader, IWriter out) throws ReaderException, WriterException, FormatterException;
 }

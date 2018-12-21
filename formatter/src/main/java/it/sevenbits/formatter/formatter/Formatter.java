@@ -5,8 +5,8 @@ import it.sevenbits.formatter.io.ireader.IReader;
 import it.sevenbits.formatter.io.ireader.ReaderException;
 import it.sevenbits.formatter.io.iwriter.IWriter;
 import it.sevenbits.formatter.io.iwriter.WriterException;
-import it.sevenbits.formatter.lexer_factory.ILexerFactory;
-import it.sevenbits.formatter.lexer_factory.lexer.ILexer;
+import it.sevenbits.formatter.lexer.lexer_factory.ILexerFactory;
+import it.sevenbits.formatter.lexer.ILexer;
 
 /**
  * Formats code with right indents and spaces
@@ -47,17 +47,17 @@ public class Formatter implements IFormatter {
         for (int i = 0; i < previousToken.getLexeme().length(); i++) {
             out.write(previousToken.getLexeme().charAt(i));
         }
-        if (previousToken.getName().equals("Left brace")) {
+        if (previousToken.getName().equals("left brace")) {
             intentCount++;
             newLine = true;
         }
-        if (previousToken.getName().equals("Semicolon")) {
+        if (previousToken.getName().equals("semicolon")) {
             newLine = true;
         }
         while (lexer.hasMoreTokens()) {
             currentToken = lexer.nextToken();
-            if (!currentToken.getName().equals("Right brace") && newLine && !currentToken.getName().equals("Whitespace")
-                    && !currentToken.getName().equals("New line")) {
+            if (!currentToken.getName().equals("right brace") && newLine && !currentToken.getName().equals("whitespace")
+                    && !currentToken.getName().equals("new line")) {
                 out.write('\n');
                 for (int j = 0; j < INTENT_LENGTH * intentCount; j++) {
                     out.write(' ');
@@ -65,7 +65,7 @@ public class Formatter implements IFormatter {
                 newLine = false;
             }
             switch (currentToken.getName()) {
-                case "Left brace":
+                case "left brace":
                     intentCount++;
                     for (int i = 0; i < currentToken.getLexeme().length(); i++) {
                         out.write(currentToken.getLexeme().charAt(i));
@@ -73,7 +73,7 @@ public class Formatter implements IFormatter {
                     newLine = true;
                     wasSpace = false;
                     break;
-                case "Right brace":
+                case "right brace":
                     intentCount--;
                     out.write('\n');
                     for (int j = 0; j < INTENT_LENGTH * intentCount; j++) {
@@ -85,21 +85,21 @@ public class Formatter implements IFormatter {
                     newLine = true;
                     wasSpace = false;
                     break;
-                case "Semicolon":
+                case "semicolon":
                     for (int i = 0; i < currentToken.getLexeme().length(); i++) {
                         out.write(currentToken.getLexeme().charAt(i));
                     }
                     newLine = true;
                     wasSpace = false;
                     break;
-                case "New line":
+                case "new line":
                     currentToken = previousToken;
                     if (!wasSpace) {
                         out.write(' ');
                     }
                     wasSpace = true;
                     break;
-                case "Whitespace":
+                case "whitespace":
                     if (!wasSpace) {
 
                         for (int i = 0; i < currentToken.getLexeme().length(); i++) {
@@ -109,18 +109,14 @@ public class Formatter implements IFormatter {
                     wasSpace = true;
                     currentToken = previousToken;
                     break;
-                case "Comma":
+                case "comma":
                     for (int i = 0; i < currentToken.getLexeme().length(); i++) {
                         out.write(currentToken.getLexeme().charAt(i));
                     }
                     out.write(' ');
                     wasSpace = true;
                     break;
-                case "Word":
-                case "Left parenthesis":
-                case "Right parenthesis":
-                case "Left bracket":
-                case "Right bracket":
+                case "char":
                     for (int i = 0; i < currentToken.getLexeme().length(); i++) {
                         out.write(currentToken.getLexeme().charAt(i));
                     }

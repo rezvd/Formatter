@@ -1,4 +1,4 @@
-package it.sevenbits.formatter.lexer_factory.lexer;
+package it.sevenbits.formatter.lexer;
 
 import it.sevenbits.formatter.token.IToken;
 import it.sevenbits.formatter.token.Token;
@@ -38,50 +38,33 @@ public class Lexer implements ILexer {
         String name;
         StringBuilder lexeme = new StringBuilder();
         switch (c) {
-            case '(':
-                name = "Left parenthesis";
-                lexeme.append(c);
-                break;
-            case ')':
-                name = "Right parenthesis";
-                lexeme.append(c);
-                break;
-            case '[':
-                name = "Left bracket";
-                lexeme.append(c);
-                break;
-            case ']':
-                name = "Right bracket";
-                lexeme.append(c);
-                break;
             case '{':
-                name = "Left brace";
+                name = "left brace";
                 lexeme.append(c);
                 break;
             case '}':
-                name = "Right brace";
+                name = "right brace";
                 lexeme.append(c);
                 break;
             case ' ':
-                name = "Whitespace";
+                name = "whitespace";
                 lexeme.append(c);
                 break;
             case '\n':
-                name = "New line";
+                name = "new line";
                 lexeme.append(c);
                 break;
             case ';':
-                name = "Semicolon";
+                name = "semicolon";
                 lexeme.append(c);
                 break;
             case ',':
-                name = "Comma";
+                name = "comma";
                 lexeme.append(c);
                 break;
             default:
-                name = "Word";
-                while (c != '(' && c != ')' && c != '[' && c != ']' && c != '{' && c != '}' && c != ' ' && c != '\n'
-                        && c != ';' && c != ',') {
+                name = "char";
+                while (c != '{' && c != '}' && c != ' ' && c != '\n' && c != ';' && c != ',') {
                     lexeme.append(c);
                     if (reader.hasNext()) {
                         c = reader.read();
@@ -89,8 +72,7 @@ public class Lexer implements ILexer {
                         break;
                     }
                 }
-                if (c == '(' || c == ')' || c == '[' || c == ']' || c == '{' || c == '}' || c == ' ' || c == '\n'
-                        || c == ';' || c == ',') {
+                if (c == '{' || c == '}' || c == ' ' || c == '\n' || c == ';' || c == ',') {
                     previous = c;
                     hasPrevious = true;
                 }
