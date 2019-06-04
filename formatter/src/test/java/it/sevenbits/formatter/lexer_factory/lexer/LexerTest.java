@@ -76,7 +76,6 @@ public class LexerTest {
         IToken token;
         while (lexer.hasMoreTokens()) {
             token = lexer.nextToken();
-            System.out.println("*" + token.getLexeme() + "* " + token.getName());
         }
     }
 }

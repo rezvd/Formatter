@@ -17,7 +17,7 @@ public class LexerSM implements ILexer {
     public LexerSM(final IReader reader) {
         this.reader = reader;
         commandRepository = new CommandRepository();
-        currentState = new State("default");
+        currentState = stateTransitions.getStartState();
     }
 
     @Override

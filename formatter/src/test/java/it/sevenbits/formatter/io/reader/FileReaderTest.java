@@ -2,6 +2,7 @@ package it.sevenbits.formatter.io.reader;
 
 import it.sevenbits.formatter.io.ireader.FileReader;
 import it.sevenbits.formatter.io.ireader.IReader;
+import it.sevenbits.formatter.io.ireader.ReaderException;
 import org.junit.Test;
 
 import java.io.FileInputStream;
@@ -25,5 +26,10 @@ public class FileReaderTest {
             assertEquals('в', reader.read());
             assertFalse(reader.hasNext());
         }
+    }
+
+    @Test (expected = ReaderException.class)
+    public void testWithReaderExeption() throws ReaderException {
+        IReader reader= new FileReader("someFileForReading", Charset.forName("UTF-8"));
     }
 }

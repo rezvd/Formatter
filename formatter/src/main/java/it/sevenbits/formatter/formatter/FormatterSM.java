@@ -31,7 +31,7 @@ public class FormatterSM implements IFormatter {
     public void format(final IReader reader, final IWriter out) throws FormatterException {
         commandRepository = new CommandRepository(out);
         ILexer lexer = lexerFactory.createLexerSM(reader);
-        State currentState = new State("default");
+        State currentState = stateTransitions.getStartState();
         while (lexer.hasMoreTokens()) {
             IToken token = null;
             try {

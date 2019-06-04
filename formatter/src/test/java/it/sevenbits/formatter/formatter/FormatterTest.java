@@ -5,14 +5,29 @@ import it.sevenbits.formatter.io.ireader.FileReader;
 import it.sevenbits.formatter.io.ireader.IReader;
 import it.sevenbits.formatter.io.ireader.ReaderException;
 import it.sevenbits.formatter.io.ireader.StringReader;
+import it.sevenbits.formatter.io.iwriter.FileWriter;
 import it.sevenbits.formatter.io.iwriter.IWriter;
 import it.sevenbits.formatter.io.iwriter.StringWriter;
 import it.sevenbits.formatter.io.iwriter.WriterException;
 import it.sevenbits.formatter.lexer.lexer_factory.LexerFactory;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyChar;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.charset.Charset;
+
 import static org.junit.Assert.assertEquals;
 
 public class FormatterTest {

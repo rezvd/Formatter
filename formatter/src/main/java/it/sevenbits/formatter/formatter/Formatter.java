@@ -28,11 +28,11 @@ public class Formatter implements IFormatter {
      * Puts right indents and spaces in the code
      *
      * @param reader gives code, that will be formatted
-     * @param out gives the result - formatted code
+     * @param writer gives the result - formatted code
      * @throws ReaderException if an error appears while reading
      * @throws WriterException if an error appears while writing
      */
-    public void format(final IReader reader, final IWriter out) throws ReaderException, WriterException {
+    public void format(final IReader reader, final IWriter writer) throws ReaderException, WriterException {
         ILexer lexer = lexerFactory.createLexer(reader);
         int intentCount = 0;
         IToken currentToken;
@@ -45,7 +45,7 @@ public class Formatter implements IFormatter {
             return;
         }
         for (int i = 0; i < previousToken.getLexeme().length(); i++) {
-            out.write(previousToken.getLexeme().charAt(i));
+            writer.write(previousToken.getLexeme().charAt(i));
         }
         if (previousToken.getName().equals("left brace")) {
             intentCount++;
@@ -58,9 +58,9 @@ public class Formatter implements IFormatter {
             currentToken = lexer.nextToken();
             if (!currentToken.getName().equals("right brace") && newLine && !currentToken.getName().equals("whitespace")
                     && !currentToken.getName().equals("new line")) {
-                out.write('\n');
+                writer.write('\n');
                 for (int j = 0; j < INTENT_LENGTH * intentCount; j++) {
-                    out.write(' ');
+                    writer.write(' ');
                 }
                 newLine = false;
             }
@@ -68,26 +68,26 @@ public class Formatter implements IFormatter {
                 case "left brace":
                     intentCount++;
                     for (int i = 0; i < currentToken.getLexeme().length(); i++) {
-                        out.write(currentToken.getLexeme().charAt(i));
+                        writer.write(currentToken.getLexeme().charAt(i));
                     }
                     newLine = true;
                     wasSpace = false;
                     break;
                 case "right brace":
                     intentCount--;
-                    out.write('\n');
+                    writer.write('\n');
                     for (int j = 0; j < INTENT_LENGTH * intentCount; j++) {
-                        out.write(' ');
+                        writer.write(' ');
                     }
                     for (int i = 0; i < currentToken.getLexeme().length(); i++) {
-                        out.write(currentToken.getLexeme().charAt(i));
+                        writer.write(currentToken.getLexeme().charAt(i));
                     }
                     newLine = true;
                     wasSpace = false;
                     break;
                 case "semicolon":
                     for (int i = 0; i < currentToken.getLexeme().length(); i++) {
-                        out.write(currentToken.getLexeme().charAt(i));
+                        writer.write(currentToken.getLexeme().charAt(i));
                     }
                     newLine = true;
                     wasSpace = false;
@@ -95,7 +95,7 @@ public class Formatter implements IFormatter {
                 case "new line":
                     currentToken = previousToken;
                     if (!wasSpace) {
-                        out.write(' ');
+                        writer.write(' ');
                     }
                     wasSpace = true;
                     break;
@@ -103,7 +103,7 @@ public class Formatter implements IFormatter {
                     if (!wasSpace) {
 
                         for (int i = 0; i < currentToken.getLexeme().length(); i++) {
-                            out.write(currentToken.getLexeme().charAt(i));
+                            writer.write(currentToken.getLexeme().charAt(i));
                         }
                     }
                     wasSpace = true;
@@ -111,14 +111,14 @@ public class Formatter implements IFormatter {
                     break;
                 case "comma":
                     for (int i = 0; i < currentToken.getLexeme().length(); i++) {
-                        out.write(currentToken.getLexeme().charAt(i));
+                        writer.write(currentToken.getLexeme().charAt(i));
                     }
-                    out.write(' ');
+                    writer.write(' ');
                     wasSpace = true;
                     break;
                 case "char":
                     for (int i = 0; i < currentToken.getLexeme().length(); i++) {
-                        out.write(currentToken.getLexeme().charAt(i));
+                        writer.write(currentToken.getLexeme().charAt(i));
                     }
                     wasSpace = false;
                 default:

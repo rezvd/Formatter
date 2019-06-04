@@ -2,8 +2,11 @@ package it.sevenbits.formatter.io.writer;
 
 import it.sevenbits.formatter.io.ireader.FileReader;
 import it.sevenbits.formatter.io.iwriter.FileWriter;
+import it.sevenbits.formatter.io.iwriter.IWriter;
+import it.sevenbits.formatter.io.iwriter.WriterException;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.charset.Charset;

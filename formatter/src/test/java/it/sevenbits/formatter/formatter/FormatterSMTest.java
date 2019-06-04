@@ -5,6 +5,7 @@ import it.sevenbits.formatter.io.ireader.FileReader;
 import it.sevenbits.formatter.io.ireader.IReader;
 import it.sevenbits.formatter.io.ireader.ReaderException;
 import it.sevenbits.formatter.io.ireader.StringReader;
+import it.sevenbits.formatter.io.iwriter.FileWriter;
 import it.sevenbits.formatter.io.iwriter.IWriter;
 import it.sevenbits.formatter.io.iwriter.StringWriter;
 import it.sevenbits.formatter.io.iwriter.WriterException;
@@ -13,6 +14,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.anyChar;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -143,12 +146,13 @@ public class FormatterSMTest {
         assertEquals("{\n    \"andh\n  \"\n}", writer.toString());
     }
 
-
-    @Test
-    public void testOneLineComment() throws ReaderException, WriterException, FormatterException {
-        reader = new StringReader("{//as \n}");
-        writer = new StringWriter();
+    @Test (expected = FormatterException.class)
+    public void testWithFormatterException() throws FormatterException, ReaderException, WriterException {
+        IWriter writer = mock(FileWriter.class);
+        doThrow(new WriterException()).when(writer).write(anyChar());
+        IReader reader = mock(FileReader.class);
+        when(reader.read()).thenReturn('}');
+        when(reader.hasNext()).thenReturn(true);
         formatter.format(reader, writer);
-        assertEquals("{\n    //as \n}", writer.toString());
     }
 }
